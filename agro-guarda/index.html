@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroGuarda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: #f7f4ee; color: #2e2e2e; }
+
+    /* NAV */
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 4rem; background: #f7f4ee; border-bottom: 1px solid #d4e8c2; position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 1.4rem; font-weight: 800; color: #2d5a27; }
+    .logo span { color: #7a9e3b; }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; }
+    nav ul a { text-decoration: none; color: #2e2e2e; font-size: 0.85rem; }
+    nav ul a:hover { color: #2d5a27; }
+    nav button { background: #2d5a27; color: white; border: none; padding: 0.6rem 1.4rem; border-radius: 50px; font-size: 0.9rem; cursor: pointer; font-family: 'Poppins', sans-serif; }
+    nav button:hover { background: #4a8c3f; }
+
+    /* HERO */
+    .hero { display: flex; justify-content: space-between; align-items: center; padding: 6rem 4rem; gap: 2rem; }
+    .hero-texto { max-width: 550px; }
+    .badge { display: inline-block; background: #d4e8c2; color: #2d5a27; padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem; }
+    h1 { font-size: 3rem; font-weight: 800; line-height: 1.2; color: #1a2e18; margin-bottom: 1rem; }
+    h1 em { color: #2d5a27; font-style: normal; }
+    .hero-texto p { font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 2rem; }
+    .hero-btns { display: flex; gap: 1rem; }
+    .btn-primary { background: #2d5a27; color: white; border: none; padding: 0.8rem 1.8rem; border-radius: 50px; font-size: 1rem; cursor: pointer; font-family: 'Poppins', sans-serif; }
+    .btn-primary:hover { background: #4a8c3f; }
+    .btn-outline { background: transparent; color: #2d5a27; border: 2px solid #2d5a27; padding: 0.8rem 1.8rem; border-radius: 50px; font-size: 1rem; cursor: pointer; font-family: 'Poppins', sans-serif; }
+    .btn-outline:hover { background: #d4e8c2; }
+    .hero-imagem { position: relative; display: flex; align-items: center; justify-content: center; width: 400px; height: 400px; }
+    .celular { width: 220px; background: #1a1a1a; border-radius: 30px; padding: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
+    .celular-tela { background: #f7f4ee; border-radius: 22px; padding: 1rem; display: flex; flex-direction: column; gap: 0.8rem; }
+    .cel-header { display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; color: #2d5a27; }
+    .cel-data { color: #999; font-weight: 400; }
+    .cel-mapa-mini { display: flex; height: 70px; border-radius: 10px; overflow: hidden; gap: 2px; }
+    .mini-zona { display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .cel-cards { display: flex; gap: 0.5rem; }
+    .cel-card { flex: 1; background: white; border-radius: 10px; padding: 0.5rem; display: flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; }
+    .cel-card.alerta { border: 1px solid #f0c040; }
+    .cel-card small { display: block; color: #999; }
+    .cel-card strong { color: #1a2e18; }
+    .cel-barra { display: flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; }
+    .cel-barra-label { color: #666; white-space: nowrap; }
+    .cel-barra-track { flex: 1; background: #e0e0e0; border-radius: 50px; height: 6px; }
+    .cel-barra-fill { width: 42%; background: #2d5a27; height: 6px; border-radius: 50px; }
+    .cel-barra-valor { font-weight: 700; color: #2d5a27; }
+    .card-flutuante { position: absolute; bottom: 40px; left: 0px; background: white; border-radius: 16px; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; box-shadow: 0 8px 30px rgba(0,0,0,0.1); font-size: 0.9rem; }
+    .card-flutuante span { font-size: 1.8rem; }
+    .card-flutuante strong { display: block; color: #1a2e18; }
+    .card-flutuante p { color: #777; margin: 0; font-size: 0.8rem; }
+
+    /* STATS */
+    .stats-section { background: #2d5a27; padding: 4rem; }
+    .stats-grid { display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; }
+    .stat { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+    .stat-numero { font-size: 2.5rem; font-weight: 800; color: #a8d5a2; }
+    .stat-label { font-size: 0.9rem; color: rgba(255,255,255,0.75); text-align: center; max-width: 150px; }
+
+    /* COMO FUNCIONA */
+    .como-funciona { padding: 5rem 4rem; background: #fff; text-align: center; }
+    .como-funciona h2 { font-size: 2rem; font-weight: 800; color: #1a2e18; margin-bottom: 0.5rem; }
+    .subtitulo { color: #777; font-size: 1rem; margin-bottom: 3rem; }
+    .passos { display: flex; justify-content: center; align-items: center; gap: 1.5rem; margin-top: 3rem; flex-wrap: wrap; }
+    .passo { background: #f7f4ee; border-radius: 20px; padding: 2rem; width: 220px; text-align: center; }
+    .numero { width: 50px; height: 50px; background: #2d5a27; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; margin: 0 auto 1rem; }
+    .passo h3 { font-size: 1rem; font-weight: 700; color: #1a2e18; margin-bottom: 0.5rem; }
+    .passo p { font-size: 0.88rem; color: #666; line-height: 1.6; }
+    .seta { font-size: 2rem; color: #a8d5a2; font-weight: 700; }
+
+    /* FUNCIONALIDADES */
+    .funcionalidades { padding: 5rem 4rem; background: #f7f4ee; text-align: center; }
+    .funcionalidades h2 { font-size: 2rem; font-weight: 800; color: #1a2e18; margin-bottom: 0.5rem; }
+    .cards { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+    .card { background: white; border-radius: 20px; padding: 2rem; width: 230px; text-align: left; transition: transform 0.2s; }
+    .card:hover { transform: translateY(-6px); }
+    .icone { font-size: 2.5rem; margin-bottom: 1rem; }
+    .card h3 { font-size: 1rem; font-weight: 700; color: #1a2e18; margin-bottom: 0.5rem; }
+    .card p { font-size: 0.88rem; color: #666; line-height: 1.6; }
+
+    /* MAPA */
+    .mapa-section { padding: 5rem 4rem; background: #fff; text-align: center; }
+    .mapa-section h2 { font-size: 2rem; font-weight: 800; color: #1a2e18; margin-bottom: 0.5rem; }
+    .mapa-container { display: flex; gap: 3rem; justify-content: center; align-items: flex-start; margin-top: 3rem; flex-wrap: wrap; }
+    .mapa { width: 420px; height: 320px; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+    .mapa-legenda { text-align: left; max-width: 300px; }
+    .mapa-legenda h3 { font-size: 1.1rem; font-weight: 700; color: #1a2e18; margin-bottom: 1rem; }
+    .legenda-item { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.8rem; font-size: 0.9rem; color: #444; }
+    .cor { width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0; }
+    .mapa-info { margin-top: 1.5rem; background: #f7f4ee; border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .mapa-info p { font-size: 0.85rem; color: #555; line-height: 1.5; }
+
+    /* DEMO */
+    .demo-section { padding: 5rem 4rem; background: #f7f4ee; text-align: center; }
+    .demo-section h2 { font-size: 2rem; font-weight: 800; color: #1a2e18; margin-bottom: 0.5rem; }
+    .demo-container { max-width: 700px; margin: 3rem auto 0; background: white; border-radius: 24px; box-shadow: 0 8px 40px rgba(0,0,0,0.1); overflow: hidden; }
+    .demo-abas { display: flex; border-bottom: 2px solid #f0f0f0; }
+    .aba { flex: 1; padding: 1rem; border: none; background: transparent; font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 600; color: #999; cursor: pointer; transition: all 0.2s; }
+    .aba.ativa { color: #2d5a27; border-bottom: 3px solid #2d5a27; background: #f7fff5; }
+    .aba:hover { background: #f7fff5; color: #2d5a27; }
+    .demo-painel { padding: 2rem; text-align: left; }
+    .demo-painel h3 { font-size: 1.1rem; font-weight: 700; color: #1a2e18; margin-bottom: 0.5rem; }
+    .demo-desc { font-size: 0.88rem; color: #777; margin-bottom: 1.5rem; line-height: 1.6; }
+    .escondido { display: none; }
+    .demo-form { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
+    .demo-form input, .demo-form select { padding: 0.75rem 1rem; border: 1.5px solid #e0e0e0; border-radius: 10px; font-size: 0.9rem; font-family: 'Poppins', sans-serif; outline: none; transition: border 0.2s; }
+    .demo-form input:focus, .demo-form select:focus { border-color: #2d5a27; }
+    .btn-demo { background: #2d5a27; color: white; border: none; padding: 0.8rem; border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer; font-family: 'Poppins', sans-serif; transition: background 0.2s; width: 100%; }
+    .btn-demo:hover { background: #4a8c3f; }
+    .lista-vazia { color: #bbb; font-size: 0.88rem; text-align: center; padding: 1rem; }
+    .item-plantacao { display: flex; justify-content: space-between; align-items: center; background: #f7f4ee; border-radius: 10px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; font-size: 0.88rem; }
+    .item-plantacao strong { color: #1a2e18; }
+    .item-plantacao span { color: #777; }
+    .resultado-app { display: flex; flex-direction: column; gap: 0.8rem; }
+    .resultado-card { display: flex; align-items: center; gap: 1rem; background: #f7f4ee; border-radius: 12px; padding: 1rem; font-size: 1.5rem; }
+    .resultado-card small { display: block; color: #777; font-size: 0.8rem; }
+    .resultado-card strong { color: #1a2e18; font-size: 1.1rem; }
+    .aviso-legal { font-size: 0.78rem; color: #aaa; margin-top: 0.5rem; }
+    .grafico-container { background: #f7f4ee; border-radius: 16px; padding: 1.5rem 1rem 0.5rem; margin-bottom: 0.5rem; }
+    .grafico-barras { display: flex; align-items: flex-end; gap: 0.8rem; height: 150px; padding-bottom: 0.5rem; }
+    .barra { flex: 1; background: linear-gradient(to top, #2d5a27, #a8d5a2); border-radius: 6px 6px 0 0; position: relative; }
+    .barra-valor { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 700; color: #2d5a27; }
+    .grafico-eixo { display: flex; justify-content: space-around; font-size: 0.75rem; color: #999; padding: 0.5rem 0; }
+    .grafico-legenda { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #777; margin-top: 0.5rem; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot.verde { background: #2d5a27; }
+    .btn-alerta { background: #c0392b; width: 100%; margin-bottom: 1rem; }
+    .btn-alerta:hover { background: #e74c3c; }
+    .alerta-item { display: flex; align-items: flex-start; gap: 0.8rem; background: #fff8f0; border-left: 4px solid #e67e22; border-radius: 0 10px 10px 0; padding: 0.8rem 1rem; margin-bottom: 0.5rem; font-size: 0.85rem; }
+    .alerta-item.verde { background: #f0fff4; border-left-color: #2d5a27; }
+
+    /* CALENDÁRIO */
+    .calendario-section { padding: 5rem 4rem; background: #fff; text-align: center; }
+    .calendario-section h2 { font-size: 2rem; font-weight: 800; color: #1a2e18; margin-bottom: 0.5rem; }
+    .cal-container { max-width: 750px; margin: 2rem auto 0; }
+    .cal-filtro { display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .cal-btn { padding: 0.6rem 1.2rem; border: 2px solid #e0e0e0; border-radius: 50px; background: white; font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; color: #555; }
+    .cal-btn:hover, .cal-btn.ativo { border-color: #2d5a27; background: #2d5a27; color: white; }
+    .cal-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; margin-bottom: 1rem; }
+    .cal-mes { border-radius: 8px; padding: 0.8rem 0.2rem; font-size: 0.7rem; font-weight: 600; color: white; display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+    .cal-mes.plantio { background: #4a8c3f; }
+    .cal-mes.colheita { background: #e6a817; color: #3a2a00; }
+    .cal-mes.neutro { background: #e0e0e0; color: #999; }
+    .cal-legenda { display: flex; justify-content: center; gap: 2rem; font-size: 0.85rem; color: #555; }
+    .cal-legenda span { display: flex; align-items: center; gap: 0.5rem; }
+    .cal-cor { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+    .cal-cor.plantio { background: #4a8c3f; }
+    .cal-cor.colheita { background: #e6a817; }
+    .cal-cor.neutro { background: #e0e0e0; }
+
+    /* CLIMA */
+    .clima-section { padding: 5rem 4rem; background: #f7f4ee; text-align: center; }
+    .clima-section h2 { font-size: 2rem; font-weight: 800; color: #1a2e18; margin-bottom: 0.5rem; }
+    .clima-container { max-width: 620px; margin: 2rem auto 0; }
+    .clima-form { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
+    .clima-form select { padding: 0.75rem 1rem; border: 1.5px solid #e0e0e0; border-radius: 10px; font-size: 0.9rem; font-family: 'Poppins', sans-serif; outline: none; transition: border 0.2s; background: white; }
+    .clima-form select:focus { border-color: #2d5a27; }
+    .clima-resultado { background: white; border-radius: 20px; padding: 1.5rem; }
+    .clima-cards { display: flex; gap: 1rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+    .clima-card { flex: 1; background: #f7f4ee; border-radius: 14px; padding: 1rem; display: flex; align-items: center; gap: 0.8rem; min-width: 150px; }
+    .clima-icone { font-size: 1.8rem; }
+    .clima-card small { display: block; font-size: 0.75rem; color: #999; }
+    .clima-card strong { font-size: 0.9rem; color: #1a2e18; }
+    .clima-recomendacao { background: #e8f5e9; border-left: 4px solid #2d5a27; border-radius: 0 12px 12px 0; padding: 1rem 1.2rem; font-size: 0.88rem; color: #1a2e18; line-height: 1.6; }
+
+    /* QUIZ */
+    .quiz-section { padding: 5rem 4rem; background: #fff; text-align: center; }
+    .quiz-section h2 { font-size: 2rem; font-weight: 800; color: #1a2e18; margin-bottom: 0.5rem; }
+    .quiz-container { max-width: 620px; margin: 2rem auto 0; background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 8px 40px rgba(0,0,0,0.08); text-align: left; }
+    .quiz-progresso { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .quiz-barra { flex: 1; background: #e0e0e0; border-radius: 50px; height: 8px; }
+    .quiz-barra-fill { background: #2d5a27; height: 8px; border-radius: 50px; transition: width 0.4s ease; width: 25%; }
+    #quiz-contador { font-size: 0.8rem; color: #999; white-space: nowrap; }
+    .quiz-pergunta { font-size: 1.05rem; font-weight: 700; color: #1a2e18; margin-bottom: 1.2rem; line-height: 1.5; }
+    .quiz-opcoes { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1rem; }
+    .quiz-opcao { padding: 0.85rem 1.2rem; border: 2px solid #e0e0e0; border-radius: 12px; background: white; font-family: 'Poppins', sans-serif; font-size: 0.9rem; cursor: pointer; text-align: left; transition: all 0.2s; color: #333; }
+    .quiz-opcao:hover { border-color: #2d5a27; background: #f7fff5; }
+    .quiz-opcao.correta { border-color: #2d5a27; background: #e8f5e9; color: #1a2e18; }
+    .quiz-opcao.errada { border-color: #e53935; background: #fff0f0; color: #c62828; }
+    .quiz-feedback { padding: 0.8rem 1rem; border-radius: 10px; font-size: 0.88rem; margin-bottom: 1rem; line-height: 1.5; }
+    .quiz-feedback.certo { background: #e8f5e9; color: #2d5a27; border-left: 4px solid #2d5a27; }
+    .quiz-feedback.errado { background: #fff0f0; color: #c62828; border-left: 4px solid #e53935; }
+    .quiz-resultado { text-align: center; padding: 1rem; }
+    .quiz-resultado h3 { font-size: 1.5rem; font-weight: 800; color: #1a2e18; margin-bottom: 0.5rem; }
+    .quiz-resultado p { color: #666; margin-bottom: 1rem; }
+    .quiz-nota { font-size: 3rem; font-weight: 800; color: #2d5a27; }
+
+    /* RELATÓRIO */
+    .relatorio-section { padding: 5rem 4rem; background: #f7f4ee; text-align: center; }
+    .relatorio-section h2 { font-size: 2rem; font-weight: 800; color: #1a2e18; margin-bottom: 0.5rem; }
+    .relatorio-container { max-width: 680px; margin: 2rem auto 0; }
+    .relatorio-form { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
+    .relatorio-form input, .relatorio-form select { padding: 0.75rem 1rem; border: 1.5px solid #e0e0e0; border-radius: 10px; font-size: 0.9rem; font-family: 'Poppins', sans-serif; outline: none; transition: border 0.2s; background: white; }
+    .relatorio-form input:focus, .relatorio-form select:focus { border-color: #2d5a27; }
+    .relatorio-resultado { background: white; border-radius: 20px; padding: 1.5rem; text-align: left; }
+    .rel-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.5rem; }
+    .rel-header h3 { font-size: 1.1rem; font-weight: 700; color: #1a2e18; }
+    .rel-header small { color: #999; font-size: 0.8rem; }
+    .rel-badge { background: #e8f5e9; color: #2d5a27; padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.78rem; font-weight: 600; }
+    .rel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1rem; }
+    .rel-card { background: #f7f4ee; border-radius: 12px; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; font-size: 1.3rem; }
+    .rel-card small { display: block; font-size: 0.75rem; color: #999; }
+    .rel-card strong { font-size: 0.9rem; color: #1a2e18; }
+    .rel-status { background: #f7f4ee; border-radius: 12px; padding: 0.8rem 1rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.88rem; color: #555; flex-wrap: wrap; gap: 0.5rem; }
+    .status-ok { color: #2d5a27; font-weight: 600; }
+
+    /* FOOTER */
+    footer { background: #1a2e18; color: white; text-align: center; padding: 3rem 4rem; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; }
+    .footer-logo { font-size: 1.5rem; font-weight: 800; color: white; }
+    .footer-logo span { color: #a8d5a2; }
+    footer p { color: #a8d5a2; font-size: 0.9rem; }
+    .footer-copy { color: #666 !important; font-size: 0.8rem !important; margin-top: 0.5rem; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">Agro<span>Guarda</span></div>
+    <ul>
+      <li><a href="#como-funciona">Como funciona</a></li>
+      <li><a href="#funcionalidades">Funcionalidades</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#mapa">Mapa</a></li>
+      <li><a href="#calendario">Calendário</a></li>
+      <li><a href="#clima">Clima</a></li>
+      <li><a href="#relatorio">Relatório</a></li>
+      <li><a href="#quiz">Quiz</a></li>
+    </ul>
+    <button>Baixar app</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-texto">
+      <span class="badge">🌱 Tecnologia para o campo</span>
+      <h1>Cuide da sua fazenda e do <em>meio ambiente</em></h1>
+      <p>O AgroGuarda ajuda produtores rurais a monitorar plantações e respeitar as áreas de preservação permanente — tudo em um só lugar.</p>
+      <div class="hero-btns">
+        <button class="btn-primary">Conheça o app</button>
+        <button class="btn-outline">Saiba mais</button>
+      </div>
+    </div>
+    <div class="hero-imagem">
+      <div class="card-flutuante">
+        <span>🌿</span>
+        <div>
+          <strong>Área preservada</strong>
+          <p>42% da fazenda protegida</p>
+        </div>
+      </div>
+      <div class="celular">
+        <div class="celular-tela">
+          <div class="cel-header"><span>🌿 AgroGuarda</span><span class="cel-data">Hoje</span></div>
+          <div class="cel-mapa-mini">
+            <div class="mini-zona" style="background:#a8d5a2;flex:2">🌾</div>
+            <div class="mini-zona" style="background:#5b9bd5;flex:1">🌊</div>
+            <div class="mini-zona" style="background:#2d5a27;flex:0.8">🌳</div>
+          </div>
+          <div class="cel-cards">
+            <div class="cel-card"><span>🌾</span><div><small>Plantação</small><strong>Boa</strong></div></div>
+            <div class="cel-card alerta"><span>⚠️</span><div><small>APP</small><strong>Atenção</strong></div></div>
+          </div>
+          <div class="cel-barra">
+            <div class="cel-barra-label">Área preservada</div>
+            <div class="cel-barra-track"><div class="cel-barra-fill"></div></div>
+            <div class="cel-barra-valor">42%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div class="stat"><span class="stat-numero">+1.200</span><span class="stat-label">Fazendas monitoradas</span></div>
+      <div class="stat"><span class="stat-numero">98%</span><span class="stat-label">Satisfação dos produtores</span></div>
+      <div class="stat"><span class="stat-numero">40%</span><span class="stat-label">Menos multas ambientais</span></div>
+      <div class="stat"><span class="stat-numero">5M ha</span><span class="stat-label">Áreas preservadas mapeadas</span></div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="como-funciona" id="como-funciona">
+    <h2>Como funciona o AgroGuarda</h2>
+    <p class="subtitulo">Do cadastro ao monitoramento completo da sua propriedade</p>
+    <div class="passos">
+      <div class="passo"><div class="numero">1</div><h3>📋 Cadastre sua fazenda</h3><p>Informe os dados da propriedade, delimite as zonas no mapa e registre suas plantações.</p></div>
+      <div class="seta">→</div>
+      <div class="passo"><div class="numero">2</div><h3>🗺️ Visualize suas áreas</h3><p>Veja o mapa dividido em zonas: plantação, APP, Reserva Legal e sede — tudo organizado.</p></div>
+      <div class="seta">→</div>
+      <div class="passo"><div class="numero">3</div><h3>🌦️ Monitore o clima</h3><p>Receba recomendações de irrigação baseadas na sua região, cultura e época do ano.</p></div>
+      <div class="seta">→</div>
+      <div class="passo"><div class="numero">4</div><h3>📈 Acompanhe a safra</h3><p>Veja gráficos de crescimento e o calendário ideal de plantio e colheita por cultura.</p></div>
+      <div class="seta">→</div>
+      <div class="passo"><div class="numero">5</div><h3>⚠️ Receba alertas</h3><p>O app monitora sua propriedade via satélite e emite alertas de risco ambiental em tempo real.</p></div>
+      <div class="seta">→</div>
+      <div class="passo"><div class="numero">6</div><h3>📋 Gere relatórios</h3><p>Produza relatórios completos da fazenda com dados ambientais e de conformidade legal.</p></div>
+    </div>
+  </section>
+
+  <!-- FUNCIONALIDADES -->
+  <section class="funcionalidades" id="funcionalidades">
+    <h2>O que o AgroGuarda oferece</h2>
+    <p class="subtitulo">Tudo que o produtor rural precisa em um só aplicativo</p>
+    <div class="cards">
+      <div class="card"><div class="icone">🗺️</div><h3>Mapa da Fazenda</h3><p>Visualize sua propriedade dividida em zonas: plantação, APP, Reserva Legal e sede.</p></div>
+      <div class="card"><div class="icone">🌾</div><h3>Controle de Plantações</h3><p>Cadastre suas culturas, acompanhe o crescimento e a previsão de colheita.</p></div>
+      <div class="card"><div class="icone">🌳</div><h3>Áreas Protegidas (APP)</h3><p>Identifique e respeite as Áreas de Preservação Permanente conforme o Código Florestal.</p></div>
+      <div class="card"><div class="icone">⚠️</div><h3>Alertas Ambientais</h3><p>Monitoramento via satélite com alertas automáticos de risco de desmatamento ilegal.</p></div>
+      <div class="card"><div class="icone">🌦️</div><h3>Clima e Irrigação</h3><p>Receba recomendações de irrigação baseadas na sua região, cultura e época do ano.</p></div>
+      <div class="card"><div class="icone">🗓️</div><h3>Calendário de Plantio</h3><p>Veja os meses ideais para plantar e colher cada cultura no Brasil.</p></div>
+      <div class="card"><div class="icone">📋</div><h3>Relatório da Fazenda</h3><p>Gere relatórios completos com dados ambientais e de conformidade legal da sua propriedade.</p></div>
+      <div class="card"><div class="icone">📐</div><h3>Calculadora de APP</h3><p>Calcule automaticamente a área mínima de preservação obrigatória para sua fazenda.</p></div>
+    </div>
+  </section>
+
+  <!-- MAPA -->
+  <section class="mapa-section" id="mapa">
+    <h2>Visualize sua propriedade</h2>
+    <p class="subtitulo">O app divide sua fazenda em zonas para facilitar a gestão</p>
+    <div class="mapa-container">
+      <div class="mapa">
+        <svg width="420" height="320" viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="260" height="200" fill="#a8d5a2" rx="16"/>
+          <text x="90" y="30" fill="#2d5a27" font-size="13" font-weight="bold">🌾 Plantação</text>
+          <line x1="20" y1="60" x2="240" y2="60" stroke="#7ab87a" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <line x1="20" y1="90" x2="240" y2="90" stroke="#7ab87a" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <line x1="20" y1="120" x2="240" y2="120" stroke="#7ab87a" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <line x1="20" y1="150" x2="240" y2="150" stroke="#7ab87a" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <line x1="20" y1="180" x2="240" y2="180" stroke="#7ab87a" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <rect x="260" y="0" width="80" height="320" fill="#5b9bd5" rx="0"/>
+          <path d="M260 40 Q290 60 320 40 Q350 20 340 60 Q330 100 300 80 Q270 60 260 100" fill="#4a8bc4" opacity="0.5"/>
+          <path d="M260 140 Q285 160 310 140 Q335 120 340 160 Q345 200 310 180 Q275 160 260 200" fill="#4a8bc4" opacity="0.5"/>
+          <text x="268" y="260" fill="white" font-size="11" font-weight="bold">🌊 APP</text>
+          <rect x="340" y="0" width="80" height="320" fill="#2d5a27" rx="0"/>
+          <text x="348" y="80" fill="white" font-size="10" font-weight="bold">🌳</text>
+          <text x="348" y="100" fill="white" font-size="10" font-weight="bold">🌳</text>
+          <text x="362" y="120" fill="white" font-size="10" font-weight="bold">🌳</text>
+          <text x="348" y="140" fill="white" font-size="10" font-weight="bold">🌳</text>
+          <text x="362" y="160" fill="white" font-size="10" font-weight="bold">🌳</text>
+          <text x="348" y="180" fill="white" font-size="10" font-weight="bold">🌳</text>
+          <text x="348" y="260" fill="white" font-size="9" font-weight="bold">Reserva</text>
+          <text x="348" y="275" fill="white" font-size="9" font-weight="bold">Legal</text>
+          <rect x="0" y="200" width="260" height="120" fill="#c8a96e" rx="0"/>
+          <text x="90" y="230" fill="#3a2a10" font-size="13" font-weight="bold">🏠 Sede / Estrutura</text>
+          <rect x="30" y="245" width="50" height="40" fill="#b8966a" rx="4"/>
+          <rect x="100" y="250" width="35" height="35" fill="#b8966a" rx="4"/>
+          <rect x="155" y="242" width="60" height="43" fill="#b8966a" rx="4"/>
+          <rect x="0" y="0" width="420" height="320" fill="none" stroke="#ccc" stroke-width="1" rx="16"/>
+        </svg>
+      </div>
+      <div class="mapa-legenda">
+        <h3>Legenda</h3>
+        <div class="legenda-item"><span class="cor" style="background:#a8d5a2"></span> Área de Plantação</div>
+        <div class="legenda-item"><span class="cor" style="background:#5b9bd5"></span> APP - Área de Preservação Permanente</div>
+        <div class="legenda-item"><span class="cor" style="background:#2d5a27"></span> Reserva Legal</div>
+        <div class="legenda-item"><span class="cor" style="background:#c8a96e"></span> Sede / Estrutura</div>
+        <div class="mapa-info">
+          <p>⚠️ A <strong>APP</strong> protege margens de rios, nascentes e encostas.</p>
+          <p>🌳 A <strong>Reserva Legal</strong> é obrigatória pelo Código Florestal Brasileiro.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section class="demo-section" id="demo">
+    <h2>Experimente o AgroGuarda</h2>
+    <p class="subtitulo">Simule como seria usar o app na prática</p>
+    <div class="demo-container">
+      <div class="demo-abas">
+        <button class="aba ativa" onclick="trocarAba('cadastro', this)">🌾 Plantação</button>
+        <button class="aba" onclick="trocarAba('calcular', this)">📐 Calcular APP</button>
+        <button class="aba" onclick="trocarAba('grafico', this)">📈 Safra</button>
+        <button class="aba" onclick="trocarAba('alerta', this)">⚠️ Alertas</button>
+      </div>
+      <div class="demo-painel" id="cadastro">
+        <h3>Cadastrar Plantação</h3>
+        <div class="demo-form">
+          <input type="text" id="nome-plantacao" placeholder="Nome da plantação (ex: Soja Lote A)">
+          <select id="tipo-plantacao"><option value="">Tipo de cultura</option><option>🌱 Soja</option><option>🌽 Milho</option><option>☕ Café</option><option>🍬 Cana-de-açúcar</option><option>🌾 Arroz</option></select>
+          <input type="number" id="area-plantacao" placeholder="Área em hectares">
+          <button class="btn-demo" onclick="cadastrarPlantacao()">Cadastrar</button>
+        </div>
+        <div class="lista-plantacoes" id="lista-plantacoes"><p class="lista-vazia">Nenhuma plantação cadastrada ainda.</p></div>
+      </div>
+      <div class="demo-painel escondido" id="calcular">
+        <h3>Calculadora de APP</h3>
+        <p class="demo-desc">Informe o tamanho total da sua fazenda para calcular a área mínima de preservação obrigatória pelo Código Florestal.</p>
+        <div class="demo-form">
+          <input type="number" id="area-total" placeholder="Área total da fazenda (hectares)">
+          <select id="bioma"><option value="0.20">🌿 Cerrado (20%)</option><option value="0.80">🌳 Amazônia (80%)</option><option value="0.20">🌾 Mata Atlântica (20%)</option></select>
+          <button class="btn-demo" onclick="calcularAPP()">Calcular</button>
+        </div>
+        <div class="resultado-app escondido" id="resultado-app">
+          <div class="resultado-card"><span>🌳</span><div><small>Reserva Legal obrigatória</small><strong id="valor-reserva">--</strong></div></div>
+          <div class="resultado-card"><span>🌾</span><div><small>Área disponível para plantio</small><strong id="valor-plantio">--</strong></div></div>
+          <p class="aviso-legal">⚠️ Valores baseados no Código Florestal Brasileiro (Lei 12.651/2012)</p>
+        </div>
+      </div>
+      <div class="demo-painel escondido" id="grafico">
+        <h3>Crescimento da Safra</h3>
+        <p class="demo-desc">Acompanhe a evolução da sua plantação ao longo dos meses.</p>
+        <div class="grafico-container">
+          <div class="grafico-barras" id="grafico-barras"></div>
+          <div class="grafico-eixo"><span>Jan</span><span>Fev</span><span>Mar</span><span>Abr</span><span>Mai</span><span>Jun</span></div>
+        </div>
+        <div class="grafico-legenda"><span class="dot verde"></span> Crescimento (%)</div>
+      </div>
+      <div class="demo-painel escondido" id="alerta">
+        <h3>Central de Alertas</h3>
+        <p class="demo-desc">O app monitora sua propriedade e emite alertas automáticos.</p>
+        <button class="btn-demo btn-alerta" onclick="dispararAlerta()">🛰️ Simular monitoramento</button>
+        <div class="alertas-lista" id="alertas-lista"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDÁRIO -->
+  <section class="calendario-section" id="calendario">
+    <h2>Calendário de Plantio</h2>
+    <p class="subtitulo">Escolha a cultura e veja os meses ideais para plantar e colher</p>
+    <div class="cal-container">
+      <div class="cal-filtro">
+        <button class="cal-btn ativo" onclick="mostrarCalendario('soja', this)">🌱 Soja</button>
+        <button class="cal-btn" onclick="mostrarCalendario('milho', this)">🌽 Milho</button>
+        <button class="cal-btn" onclick="mostrarCalendario('cafe', this)">☕ Café</button>
+        <button class="cal-btn" onclick="mostrarCalendario('cana', this)">🍬 Cana</button>
+        <button class="cal-btn" onclick="mostrarCalendario('arroz', this)">🌾 Arroz</button>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div class="cal-legenda">
+        <span><span class="cal-cor plantio"></span> Plantio</span>
+        <span><span class="cal-cor colheita"></span> Colheita</span>
+        <span><span class="cal-cor neutro"></span> Período neutro</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIMA -->
+  <section class="clima-section" id="clima">
+    <h2>Clima e Irrigação</h2>
+    <p class="subtitulo">Simule as condições climáticas e veja a recomendação de irrigação</p>
+    <div class="clima-container">
+      <div class="clima-form">
+        <select id="clima-regiao"><option value="">Selecione sua região</option><option value="norte">🌧️ Norte</option><option value="nordeste">☀️ Nordeste</option><option value="centrooeste">🌤️ Centro-Oeste</option><option value="sudeste">⛅ Sudeste</option><option value="sul">🌦️ Sul</option></select>
+        <select id="clima-mes"><option value="">Selecione o mês</option><option value="chuva">Jan / Fev (Chuvas)</option><option value="transicao">Mar / Abr (Transição)</option><option value="seco">Mai / Jun / Jul (Seco)</option><option value="transicao">Ago / Set (Transição)</option><option value="chuva">Out / Nov / Dez (Chuvas)</option></select>
+        <select id="clima-cultura"><option value="">Sua cultura principal</option><option value="alta">🌱 Soja</option><option value="media">🌽 Milho</option><option value="baixa">☕ Café</option><option value="alta">🍬 Cana</option><option value="alta">🌾 Arroz</option></select>
+        <button class="btn-demo" onclick="analisarClima()">🌦️ Analisar clima</button>
+      </div>
+      <div class="clima-resultado escondido" id="clima-resultado">
+        <div class="clima-cards">
+          <div class="clima-card"><div class="clima-icone" id="clima-icone">☀️</div><div><small>Condição atual</small><strong id="clima-condicao">--</strong></div></div>
+          <div class="clima-card"><div class="clima-icone">💧</div><div><small>Irrigação necessária</small><strong id="clima-irrigacao">--</strong></div></div>
+          <div class="clima-card"><div class="clima-icone">🌡️</div><div><small>Temperatura estimada</small><strong id="clima-temp">--</strong></div></div>
+        </div>
+        <div class="clima-recomendacao" id="clima-recomendacao"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="quiz-section" id="quiz">
+    <h2>Você conhece o Código Florestal?</h2>
+    <p class="subtitulo">Teste seus conhecimentos sobre preservação ambiental</p>
+    <div class="quiz-container">
+      <div class="quiz-progresso">
+        <div class="quiz-barra"><div class="quiz-barra-fill" id="quiz-barra-fill"></div></div>
+        <span id="quiz-contador">Pergunta 1 de 4</span>
+      </div>
+      <div id="quiz-pergunta" class="quiz-pergunta"></div>
+      <div id="quiz-opcoes" class="quiz-opcoes"></div>
+      <div id="quiz-feedback" class="quiz-feedback escondido"></div>
+      <button class="btn-demo" id="quiz-proximo" onclick="proximaPergunta()" style="display:none;margin-top:1rem">Próxima →</button>
+      <div id="quiz-resultado" class="quiz-resultado escondido"></div>
+    </div>
+  </section>
+
+  <!-- RELATÓRIO -->
+  <section class="relatorio-section" id="relatorio">
+    <h2>Gerar Relatório da Fazenda</h2>
+    <p class="subtitulo">Preencha os dados e gere um relatório completo da sua propriedade</p>
+    <div class="relatorio-container">
+      <div class="relatorio-form">
+        <input type="text" id="rel-nome" placeholder="Nome da fazenda">
+        <input type="text" id="rel-dono" placeholder="Nome do produtor">
+        <input type="number" id="rel-area" placeholder="Área total (hectares)">
+        <select id="rel-bioma"><option value="">Selecione o bioma</option><option value="cerrado">🌿 Cerrado</option><option value="amazonia">🌳 Amazônia</option><option value="mata">🌿 Mata Atlântica</option><option value="caatinga">🌵 Caatinga</option></select>
+        <select id="rel-cultura"><option value="">Principal cultura</option><option>🌱 Soja</option><option>🌽 Milho</option><option>☕ Café</option><option>🍬 Cana-de-açúcar</option><option>🌾 Arroz</option></select>
+        <button class="btn-demo" onclick="gerarRelatorio()">📋 Gerar Relatório</button>
+      </div>
+      <div class="relatorio-resultado escondido" id="relatorio-resultado">
+        <div class="rel-header"><div><h3 id="rel-titulo"></h3><small id="rel-data"></small></div><span class="rel-badge">✅ Gerado pelo AgroGuarda</span></div>
+        <div class="rel-grid">
+          <div class="rel-card"><span>👤</span><div><small>Produtor</small><strong id="rel-r-dono"></strong></div></div>
+          <div class="rel-card"><span>📐</span><div><small>Área total</small><strong id="rel-r-area"></strong></div></div>
+          <div class="rel-card"><span>🌳</span><div><small>Reserva Legal</small><strong id="rel-r-reserva"></strong></div></div>
+          <div class="rel-card"><span>🌾</span><div><small>Área de plantio</small><strong id="rel-r-plantio"></strong></div></div>
+          <div class="rel-card"><span>🌊</span><div><small>APP estimada</small><strong id="rel-r-app"></strong></div></div>
+          <div class="rel-card"><span>🌿</span><div><small>Bioma</small><strong id="rel-r-bioma"></strong></div></div>
+        </div>
+        <div class="rel-status"><span>📊 Status ambiental:</span><span class="status-ok">✅ Propriedade dentro dos parâmetros legais</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Agro<span>Guarda</span></div>
+    <p>Tecnologia para proteger o campo e o meio ambiente 🌱</p>
+    <p class="footer-copy">© 2026 AgroGuarda — Trabalho acadêmico</p>
+  </footer>
+
+  <script>
+    function trocarAba(id, btn) {
+      document.querySelectorAll('.demo-painel').forEach(p => p.classList.add('escondido'));
+      document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
+      document.getElementById(id).classList.remove('escondido');
+      btn.classList.add('ativa');
+    }
+
+    function cadastrarPlantacao() {
+      const nome = document.getElementById('nome-plantacao').value;
+      const tipo = document.getElementById('tipo-plantacao').value;
+      const area = document.getElementById('area-plantacao').value;
+      if (!nome || !tipo || !area) { alert('Preencha todos os campos!'); return; }
+      const lista = document.getElementById('lista-plantacoes');
+      const vazia = lista.querySelector('.lista-vazia');
+      if (vazia) vazia.remove();
+      const item = document.createElement('div');
+      item.className = 'item-plantacao';
+      item.innerHTML = `<strong>${tipo} ${nome}</strong><span>${area} ha</span>`;
+      lista.appendChild(item);
+      document.getElementById('nome-plantacao').value = '';
+      document.getElementById('area-plantacao').value = '';
+    }
+
+    function calcularAPP() {
+      const area = parseFloat(document.getElementById('area-total').value);
+      const percentual = parseFloat(document.getElementById('bioma').value);
+      if (!area) { alert('Informe a área da fazenda!'); return; }
+      const reserva = (area * percentual).toFixed(1);
+      const plantio = (area - reserva).toFixed(1);
+      document.getElementById('valor-reserva').textContent = reserva + ' hectares';
+      document.getElementById('valor-plantio').textContent = plantio + ' hectares';
+      document.getElementById('resultado-app').classList.remove('escondido');
+    }
+
+    const dados = [20, 35, 50, 65, 80, 72];
+    const barras = document.getElementById('grafico-barras');
+    dados.forEach(v => {
+      const b = document.createElement('div');
+      b.className = 'barra';
+      b.style.height = v + '%';
+      b.innerHTML = `<span class="barra-valor">${v}%</span>`;
+      barras.appendChild(b);
+    });
+
+    const alertas = [
+      { tipo: 'laranja', icone: '🛰️', texto: 'Monitoramento via satélite iniciado...' },
+      { tipo: 'laranja', icone: '⚠️', texto: 'Movimentação detectada na borda da Reserva Legal.' },
+      { tipo: 'laranja', icone: '🌳', texto: 'Possível supressão de vegetação na área norte.' },
+      { tipo: 'verde', icone: '✅', texto: 'Área de APP dentro dos limites legais.' },
+      { tipo: 'verde', icone: '📋', texto: 'Relatório gerado e salvo automaticamente.' },
+    ];
+    let indice = 0;
+    function dispararAlerta() {
+      const lista = document.getElementById('alertas-lista');
+      if (indice === 0) lista.innerHTML = '';
+      if (indice < alertas.length) {
+        const a = alertas[indice];
+        const item = document.createElement('div');
+        item.className = `alerta-item ${a.tipo === 'verde' ? 'verde' : ''}`;
+        item.innerHTML = `<span>${a.icone}</span><span>${a.texto}</span>`;
+        lista.appendChild(item);
+        indice++;
+        if (indice < alertas.length) setTimeout(dispararAlerta, 1000);
+      } else { indice = 0; }
+    }
+
+    const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    const calendarios = {
+      soja:  ['plantio','plantio','neutro','neutro','neutro','neutro','neutro','neutro','plantio','plantio','colheita','colheita'],
+      milho: ['neutro','neutro','neutro','neutro','neutro','neutro','plantio','plantio','plantio','colheita','colheita','neutro'],
+      cafe:  ['colheita','colheita','colheita','colheita','neutro','neutro','neutro','plantio','plantio','neutro','neutro','colheita'],
+      cana:  ['plantio','plantio','plantio','neutro','neutro','neutro','neutro','neutro','neutro','colheita','colheita','colheita'],
+      arroz: ['neutro','neutro','neutro','neutro','neutro','neutro','neutro','plantio','plantio','plantio','colheita','colheita'],
+    };
+    function mostrarCalendario(cultura, btn) {
+      document.querySelectorAll('.cal-btn').forEach(b => b.classList.remove('ativo'));
+      btn.classList.add('ativo');
+      const grid = document.getElementById('cal-grid');
+      grid.innerHTML = '';
+      calendarios[cultura].forEach((tipo, i) => {
+        const div = document.createElement('div');
+        div.className = `cal-mes ${tipo}`;
+        div.innerHTML = `<span>${meses[i]}</span>`;
+        grid.appendChild(div);
+      });
+    }
+    mostrarCalendario('soja', document.querySelector('.cal-btn.ativo'));
+
+    function analisarClima() {
+      const regiao = document.getElementById('clima-regiao').value;
+      const mes = document.getElementById('clima-mes').value;
+      const cultura = document.getElementById('clima-cultura').value;
+      if (!regiao || !mes || !cultura) { alert('Preencha todos os campos!'); return; }
+      const dadosClima = { norte: { temp: '28-34°C', icone: '🌧️', condicao: 'Muito úmido' }, nordeste: { temp: '25-38°C', icone: '☀️', condicao: 'Seco e quente' }, centrooeste: { temp: '22-32°C', icone: '🌤️', condicao: 'Moderado' }, sudeste: { temp: '20-30°C', icone: '⛅', condicao: 'Tropical' }, sul: { temp: '15-25°C', icone: '🌦️', condicao: 'Ameno' } };
+      const irrigacao = { chuva: { alta: 'Não necessária', media: 'Não necessária', baixa: 'Não necessária' }, transicao: { alta: 'Moderada (3x/semana)', media: 'Leve (2x/semana)', baixa: 'Não necessária' }, seco: { alta: 'Intensa (diária)', media: 'Moderada (4x/semana)', baixa: 'Leve (2x/semana)' } };
+      const recomendacoes = { chuva: '✅ As chuvas estão suprindo a necessidade hídrica. Monitore o excesso de água para evitar encharcamento do solo.', transicao: '⚠️ Período de transição: fique atento às variações climáticas. Prepare o sistema de irrigação como precaução.', seco: '🚨 Período seco detectado! Ative o sistema de irrigação conforme indicado. Verifique as APPs próximas a nascentes.' };
+      const d = dadosClima[regiao];
+      document.getElementById('clima-icone').textContent = d.icone;
+      document.getElementById('clima-condicao').textContent = d.condicao;
+      document.getElementById('clima-temp').textContent = d.temp;
+      document.getElementById('clima-irrigacao').textContent = irrigacao[mes][cultura] || 'Moderada';
+      document.getElementById('clima-recomendacao').textContent = recomendacoes[mes];
+      document.getElementById('clima-resultado').classList.remove('escondido');
+    }
+
+    const perguntas = [
+      { pergunta: "O que é uma Área de Preservação Permanente (APP)?", opcoes: ["Área onde é proibido qualquer tipo de plantação permanente", "Área protegida por lei que cobre vegetação nativa em locais sensíveis como margens de rios", "Área reservada para construção de sede da fazenda", "Área onde o agricultor pode plantar sem restrições"], correta: 1, explicacao: "✅ A APP protege áreas sensíveis como margens de rios, nascentes, encostas e topos de morro, conforme o Código Florestal (Lei 12.651/2012)." },
+      { pergunta: "Qual é o percentual mínimo de Reserva Legal obrigatório para propriedades no Cerrado?", opcoes: ["80%", "50%", "20%", "10%"], correta: 2, explicacao: "✅ No Cerrado, a Reserva Legal mínima é de 20% da propriedade. Na Amazônia esse percentual sobe para 80%." },
+      { pergunta: "O que acontece com o produtor que desmata uma APP sem autorização?", opcoes: ["Nada, pois a APP é de livre uso do proprietário", "Pode receber multas, embargo da propriedade e ter que recompor a área", "Apenas recebe uma advertência escrita", "Paga uma taxa anual ao governo"], correta: 1, explicacao: "✅ O desmatamento ilegal de APP pode gerar multas de R$5.000 a R$50.000 por hectare, além de embargo e obrigação de recomposição." },
+      { pergunta: "O AgroGuarda pode ajudar o produtor a identificar APPs em sua propriedade?", opcoes: ["Não, isso só é feito por engenheiros ambientais presencialmente", "Sim, o app mapeia e delimita automaticamente as APPs com base na localização da fazenda", "Sim, mas apenas para fazendas acima de 1.000 hectares", "Não, o app só controla plantações"], correta: 1, explicacao: "✅ O AgroGuarda usa geolocalização e dados do CAR para identificar e delimitar APPs automaticamente." }
+    ];
+    let quizAtual = 0, quizPontos = 0, quizRespondido = false;
+    function carregarPergunta() {
+      const p = perguntas[quizAtual];
+      document.getElementById('quiz-pergunta').textContent = p.pergunta;
+      document.getElementById('quiz-contador').textContent = `Pergunta ${quizAtual + 1} de ${perguntas.length}`;
+      document.getElementById('quiz-barra-fill').style.width = `${((quizAtual + 1) / perguntas.length) * 100}%`;
+      document.getElementById('quiz-feedback').className = 'quiz-feedback escondido';
+      document.getElementById('quiz-proximo').style.display = 'none';
+      quizRespondido = false;
+      const opcoes = document.getElementById('quiz-opcoes');
+      opcoes.innerHTML = '';
+      p.opcoes.forEach((op, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opcao';
+        btn.textContent = op;
+        btn.onclick = () => responderQuiz(i);
+        opcoes.appendChild(btn);
+      });
+    }
+    function responderQuiz(indice) {
+      if (quizRespondido) return;
+      quizRespondido = true;
+      const p = perguntas[quizAtual];
+      const opcoes = document.querySelectorAll('.quiz-opcao');
+      opcoes.forEach(o => o.style.pointerEvents = 'none');
+      opcoes[p.correta].classList.add('correta');
+      const feedback = document.getElementById('quiz-feedback');
+      if (indice === p.correta) { quizPontos++; feedback.className = 'quiz-feedback certo'; feedback.textContent = p.explicacao; }
+      else { opcoes[indice].classList.add('errada'); feedback.className = 'quiz-feedback errado'; feedback.textContent = '❌ Incorreto. ' + p.explicacao.replace('✅ ', ''); }
+      document.getElementById('quiz-proximo').style.display = 'block';
+    }
+    function proximaPergunta() {
+      quizAtual++;
+      if (quizAtual < perguntas.length) { carregarPergunta(); }
+      else {
+        document.getElementById('quiz-opcoes').innerHTML = '';
+        document.getElementById('quiz-pergunta').textContent = '';
+        document.getElementById('quiz-feedback').className = 'quiz-feedback escondido';
+        document.getElementById('quiz-proximo').style.display = 'none';
+        const resultado = document.getElementById('quiz-resultado');
+        resultado.classList.remove('escondido');
+        resultado.innerHTML = `<div class="quiz-nota">${quizPontos}/${perguntas.length}</div><h3>${quizPontos === perguntas.length ? '🏆 Parabéns!' : quizPontos >= 2 ? '👍 Bom trabalho!' : '📚 Continue estudando!'}</h3><p>${quizPontos === perguntas.length ? 'Você acertou tudo! Está pronto para usar o AgroGuarda.' : 'O AgroGuarda pode te ajudar a entender melhor a legislação ambiental.'}</p><button class="btn-demo" onclick="reiniciarQuiz()">Tentar novamente</button>`;
+      }
+    }
+    function reiniciarQuiz() { quizAtual = 0; quizPontos = 0; document.getElementById('quiz-resultado').classList.add('escondido'); carregarPergunta(); }
+    carregarPergunta();
+
+    function gerarRelatorio() {
+      const nome = document.getElementById('rel-nome').value;
+      const dono = document.getElementById('rel-dono').value;
+      const area = parseFloat(document.getElementById('rel-area').value);
+      const bioma = document.getElementById('rel-bioma').value;
+      const cultura = document.getElementById('rel-cultura').value;
+      if (!nome || !dono || !area || !bioma || !cultura) { alert('Preencha todos os campos!'); return; }
+      const percentuais = { cerrado: 0.20, amazonia: 0.80, mata: 0.20, caatinga: 0.20 };
+      const nomesBioma = { cerrado: '🌿 Cerrado', amazonia: '🌳 Amazônia', mata: '🌿 Mata Atlântica', caatinga: '🌵 Caatinga' };
+      const reserva = (area * percentuais[bioma]).toFixed(1);
+      const app = (area * 0.05).toFixed(1);
+      const plantio = (area - reserva - app).toFixed(1);
+      const hoje = new Date().toLocaleDateString('pt-BR');
+      document.getElementById('rel-titulo').textContent = '📋 Fazenda ' + nome;
+      document.getElementById('rel-data').textContent = 'Relatório gerado em ' + hoje;
+      document.getElementById('rel-r-dono').textContent = dono;
+      document.getElementById('rel-r-area').textContent = area + ' ha';
+      document.getElementById('rel-r-reserva').textContent = reserva + ' ha';
+      document.getElementById('rel-r-plantio').textContent = plantio + ' ha';
+      document.getElementById('rel-r-app').textContent = app + ' ha';
+      document.getElementById('rel-r-bioma').textContent = nomesBioma[bioma];
+      document.getElementById('relatorio-resultado').classList.remove('escondido');
+    }
+  </script>
+</body>
+</html>
